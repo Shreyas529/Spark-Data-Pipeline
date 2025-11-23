@@ -62,7 +62,7 @@ Edit `config.py` to customize:
 NUM_PRODUCERS = 2
 EVENTS_PER_PRODUCER = 20000
 DURATION_SECONDS = 60
-DATA_GENERATOR = "poisson"  # Documented: "poisson" or "mmpp" (see config.py)
+DATA_GENERATOR = "poisson"  # Options: "poisson", "mmpp" (see config.py)
 
 # Kafka configuration
 BOOTSTRAP_SERVERS = "localhost:9092"
