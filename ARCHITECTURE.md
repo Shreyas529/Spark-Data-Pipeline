@@ -61,8 +61,8 @@ This repository implements a **real-time streaming analytics system** using **Ap
 - **Event Generation**:
   - `AD_TYPES`: ['image', 'video', 'carousel', 'text', 'story', 'shopping', 'collection']
   - `EVENT_TYPES`: ['view', 'click', 'purchase']
-  - `DATA_GENERATOR`: Distribution type (officially: "poisson", "mmpp")
-    - Note: "uniform" is also supported in producer.py as an undocumented option
+  - `DATA_GENERATOR`: Distribution type (documented: "poisson", "mmpp")
+    - Note: "uniform" is also supported by producer.py but not documented in config.py
   
 - **Performance Configuration**:
   - `NUM_PRODUCERS`: Parallel producers (2)

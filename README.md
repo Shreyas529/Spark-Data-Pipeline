@@ -62,7 +62,7 @@ Edit `config.py` to customize:
 NUM_PRODUCERS = 2
 EVENTS_PER_PRODUCER = 20000
 DURATION_SECONDS = 60
-DATA_GENERATOR = "poisson"  # Official: "poisson" or "mmpp"; "uniform" also works
+DATA_GENERATOR = "poisson"  # Documented: "poisson" or "mmpp" (see config.py)
 
 # Kafka configuration
 BOOTSTRAP_SERVERS = "localhost:9092"
@@ -108,7 +108,9 @@ print(f"Created {len(mappings)} ad mappings")
 
 ## Traffic Patterns
 
-### Poisson Distribution (Default - Recommended)
+The system supports three traffic generation patterns:
+
+### Poisson Distribution (Recommended)
 Realistic random arrivals with exponential inter-arrival times:
 ```python
 DATA_GENERATOR = "poisson"
@@ -120,11 +122,13 @@ Simulates bursty traffic with high/low states:
 DATA_GENERATOR = "mmpp"
 ```
 
-### Uniform Distribution (Undocumented)
-Evenly distributed events (works but not in config.py documentation):
+### Uniform Distribution
+Evenly distributed events (works but not documented in config.py):
 ```python
 DATA_GENERATOR = "uniform"
 ```
+
+Note: Only "poisson" and "mmpp" are officially documented in config.py. The "uniform" option is supported by producer.py but not listed in the configuration file.
 
 ## Event Schema
 
