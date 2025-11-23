@@ -36,7 +36,7 @@ This will:
 ├── config.py                           # Centralized configuration
 ├── master_code_spark.py               # Main orchestrator
 ├── producer.py                         # Kafka event producers
-├── data_generation.py                  # Uniform distribution generator
+├── data_generation.py                  # Core data generation (uniform dist.)
 ├── data_generation_poisson_baseline.py # Poisson distribution generator
 ├── data_generation_mmpp.py            # MMPP (bursty) generator
 ├── latency_calculator.py              # E2E latency measurement
@@ -62,7 +62,7 @@ Edit `config.py` to customize:
 NUM_PRODUCERS = 2
 EVENTS_PER_PRODUCER = 20000
 DURATION_SECONDS = 60
-DATA_GENERATOR = "poisson"  # Options: "poisson", "mmpp", "uniform"
+DATA_GENERATOR = "poisson"  # Official: "poisson" or "mmpp"; "uniform" also works
 
 # Kafka configuration
 BOOTSTRAP_SERVERS = "localhost:9092"
@@ -108,7 +108,7 @@ print(f"Created {len(mappings)} ad mappings")
 
 ## Traffic Patterns
 
-### Poisson Distribution (Default)
+### Poisson Distribution (Default - Recommended)
 Realistic random arrivals with exponential inter-arrival times:
 ```python
 DATA_GENERATOR = "poisson"
@@ -120,8 +120,8 @@ Simulates bursty traffic with high/low states:
 DATA_GENERATOR = "mmpp"
 ```
 
-### Uniform Distribution
-Evenly distributed events (undocumented option):
+### Uniform Distribution (Undocumented)
+Evenly distributed events (works but not in config.py documentation):
 ```python
 DATA_GENERATOR = "uniform"
 ```
