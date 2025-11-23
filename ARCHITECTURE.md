@@ -61,7 +61,8 @@ This repository implements a **real-time streaming analytics system** using **Ap
 - **Event Generation**:
   - `AD_TYPES`: ['image', 'video', 'carousel', 'text', 'story', 'shopping', 'collection']
   - `EVENT_TYPES`: ['view', 'click', 'purchase']
-  - `DATA_GENERATOR`: Distribution type ("poisson", "mmpp", "uniform")
+  - `DATA_GENERATOR`: Distribution type ("poisson", "mmpp")
+    - Note: "uniform" is supported in producer.py but not listed in config.py
   
 - **Performance Configuration**:
   - `NUM_PRODUCERS`: Parallel producers (2)
@@ -166,14 +167,16 @@ After duration completes:
 ```
 
 ### 5. Spark Streaming Job (`SparkJob.py`)
+**Status**: ⚠️ **NOT INCLUDED IN REPOSITORY** - Referenced by master_code_spark.py but must be implemented separately.
+
 **Purpose**: Real-time stream processing with Spark Structured Streaming.
 
-**Expected Functionality** (referenced but not present in repo):
-- Consumes from `events_spark` topic
-- Performs windowed aggregations per campaign
-- Calculates metrics (count, max produce time)
-- Writes results to `results_spark` topic
-- Uses checkpointing for fault tolerance
+**Required Functionality**:
+- Must consume from `events_spark` topic
+- Must perform windowed aggregations per campaign
+- Must calculate metrics (count, max produce time)
+- Must write results to `results_spark` topic
+- Should use checkpointing for fault tolerance (checkpoint dir: `spark_checkpoints`)
 
 ### 6. Latency Calculator (`latency_calculator.py`)
 **Purpose**: Measures end-to-end system latency.
@@ -357,11 +360,12 @@ DATA_GENERATOR = "mmpp"
 
 ## Limitations and Considerations
 
-1. **Missing SparkJob.py**: Referenced but not included in repository
-2. **Single-node Deployment**: Configured for localhost
-3. **No Schema Registry**: Direct JSON serialization
-4. **Fixed Window Size**: 10-second windows hardcoded
+1. **⚠️ Critical: SparkJob.py Not Included**: The main Spark streaming job is referenced by master_code_spark.py (line 22) but is not present in the repository. This must be implemented before the system can run end-to-end. See section 5 above for required functionality.
+2. **Single-node Deployment**: Configured for localhost (not production-ready distributed deployment)
+3. **No Schema Registry**: Direct JSON serialization without schema validation
+4. **Fixed Window Size**: 10-second windows hardcoded in data generation
 5. **No Error Recovery**: Producers don't retry on failure
+6. **"uniform" Distribution**: Supported in producer.py but not documented in config.py as a valid DATA_GENERATOR option
 
 ## Extension Points
 
@@ -383,12 +387,18 @@ The architecture supports replacing Spark with:
 
 ## Summary
 
-This system demonstrates a production-grade streaming analytics pipeline with:
+This repository provides the **foundational components** for a production-grade streaming analytics pipeline with:
 - ✅ Scalable multi-process producers
 - ✅ Flexible traffic generation (uniform, Poisson, MMPP)
-- ✅ Real-time windowed aggregations
-- ✅ End-to-end latency measurement
 - ✅ Configurable system parameters
+- ✅ End-to-end latency measurement framework
 - ✅ Clean separation of concerns
+- ⚠️ **Requires SparkJob.py implementation** for complete functionality
 
-The architecture is designed for experimentation with streaming systems, performance benchmarking, and understanding distributed stream processing patterns.
+The architecture demonstrates best practices for streaming system design and is ideal for:
+- Experimentation with streaming systems
+- Performance benchmarking
+- Understanding distributed stream processing patterns
+- Educational purposes in streaming analytics
+
+**Note**: To run the complete system, you must implement SparkJob.py to handle the Spark Structured Streaming logic (see section 5 for requirements).
