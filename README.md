@@ -66,7 +66,7 @@ All configuration options are defined in `config.py`:
 | `EVENTS_PER_PRODUCER` | 20000 | Events per producer per second |
 | `DURATION_SECONDS` | 60 | Duration of event generation |
 | `WINDOW_SIZE_SEC` | 10 | Aggregation window size |
-| `DATA_GENERATOR` | `poisson` | Traffic pattern: `uniform`, `poisson`, or `mmpp` |
+| `DATA_GENERATOR` | `poisson` | Traffic pattern: `poisson` or `mmpp` |
 
 ## Usage
 
@@ -136,9 +136,11 @@ Each generated event contains:
 
 ## Traffic Generation Models
 
-- **Uniform**: Events distributed evenly across each second
-- **Poisson**: Events follow a Poisson arrival process (exponential inter-arrival times)
-- **MMPP**: Markov-Modulated Poisson Process for bursty, correlated traffic patterns
+The pipeline supports three traffic generation models (set via `DATA_GENERATOR` in config.py):
+
+- **Poisson** (`poisson`): Events follow a Poisson arrival process with exponential inter-arrival times
+- **MMPP** (`mmpp`): Markov-Modulated Poisson Process for bursty, correlated traffic patterns
+- **Uniform** (`uniform`): Events distributed evenly across each second (also supported in code)
 
 ## Output
 
